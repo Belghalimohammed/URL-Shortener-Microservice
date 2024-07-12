@@ -39,6 +39,14 @@ app.post('/api/shorturl', function(req, res) {
   console.log(req.body);
  
   let { url } = req.body;
+
+  const urlRegex = /^(https?:\/\/)?([\w.-]+\.[\w]{2,})(\/\S*)?$/;
+
+  // Validate URL format
+  if (!urlRegex.test(url)) {
+    return res.status(400).json({ error: 'invalid url' });
+  }
+
   let newurl;
   if( url.endsWith('/') ){
     newurl = url.slice(0,url.length-1);
