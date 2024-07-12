@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
-//const shortid = require('shortid');
+const validUrl = require('valid-url'); 
 const dns = require('dns');
 
 
@@ -40,10 +40,7 @@ app.post('/api/shorturl', function(req, res) {
  
   let { url } = req.body;
 
-  const urlRegex = /^(https?:\/\/)?([\w.-]+\.[\w]{2,})(\/\S*)?$/;
-
-  // Validate URL format
-  if (!urlRegex.test(url)) {
+  if (!validUrl.isWebUri(url)) {
     return res.status(400).json({ error: 'invalid url' });
   }
 
